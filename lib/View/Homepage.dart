@@ -56,7 +56,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[400],
+      backgroundColor: Color(0xFFFFFDFA),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -82,15 +82,18 @@ class _HomepageState extends State<Homepage> {
               SizedBox(height: 10),
               NeumorphicSearchBar(),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+
                   child: ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       return NeumorphicTile(
+                        onDismissed: () {
+                          // Handle the action when the tile is dismissed (e.g., delete item)
+                          // You may want to remove the item from your data list.
+                        },
                           child: ListTile(
                             leading: CircleAvatar(
-                              radius: 30,
+                              radius: 35,
                               backgroundImage: AssetImage("assets/Icons/user_icon.png"),
                             ),
                             title: Column(
@@ -111,7 +114,6 @@ class _HomepageState extends State<Homepage> {
                     },
                   ),
                 ),
-              ),
 
             ],
           ),
