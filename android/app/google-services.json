@@ -12,7 +12,12 @@
           "package_name": "com.example.whisp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "936872085007-e83bhprh7tmdoe9n2mh34gr59ng4211q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBxgzurUTIFjXWTAt8Zw0aYGZ-dmlqK47k"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936872085007-e83bhprh7tmdoe9n2mh34gr59ng4211q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "936872085007-nnf2i9i25654lal9me9rka0el3j5udde.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whisp"
+              }
+            }
+          ]
         }
       }
     }

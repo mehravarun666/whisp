@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whisp/View/constants/buttons.dart';
 import 'package:whisp/View/constants/chatlistview.dart';
+import 'package:whisp/View/constants/right_drawer.dart';
 import 'package:whisp/View/constants/searchbar.dart';
 
 import '../Models/Userinfo.dart';
@@ -119,6 +120,7 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
       ),
+     endDrawer: CustomDrawer(),
     );
   }
 }

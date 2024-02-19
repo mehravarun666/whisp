@@ -1,13 +1,30 @@
+import 'dart:ffi';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whisp/View/Homepage.dart';
+import 'package:whisp/View/forgotPassPage.dart';
+import 'package:whisp/main.dart';
 
 class LoginDemo extends StatefulWidget {
+
+  final VoidCallback signUp;
+  LoginDemo({Key? key, required this.signUp}):super(key:key);
   @override
   _LoginDemoState createState() => _LoginDemoState();
 }
 
 class _LoginDemoState extends State<LoginDemo> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +48,7 @@ class _LoginDemoState extends State<LoginDemo> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Username',
@@ -42,6 +60,7 @@ class _LoginDemoState extends State<LoginDemo> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: passwordController,
 
                 obscureText: true,
                 decoration: InputDecoration(
@@ -60,13 +79,7 @@ class _LoginDemoState extends State<LoginDemo> {
                   child: ElevatedButton(
                     child: Text( 'Log in ', style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
-                    onPressed: (){
-                      print('Successfully log in ');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Homepage()), // Replace SecondScreen() with the widget for your next screen
-                      );
-                    },
+                    onPressed:signIn,
 
                   ),
                 ),
@@ -76,31 +89,62 @@ class _LoginDemoState extends State<LoginDemo> {
             SizedBox(
               height: 50,
             ),
-            Container(
-                child: Center(
-                  child: Row(
-                    children: [
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 62),
-                        child: Text('Forgot your login details? '),
-                      ),
+            GestureDetector(
+              child: Text(
+                'Forgot Password?',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blue,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) => ForgotPassPage(),
+                ));
+              },
+            ),
 
-                      Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: InkWell(
-                            onTap: (){
-                              print('hello');
-                            },
-                            child: Text('Get help logging in.', style: TextStyle(fontSize: 14, color: Colors.blue),)),
-                      )
-                    ],
-                  ),
-                )
-            )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 62),
+                      child: Container(height:40,child: Text("Don't have an account ?" )),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: InkWell(
+                          onTap: (){
+                            widget.signUp();
+                            print('hello');
+                          },
+                          child: Container(height:40,width:50,child: Text('Sign in', style: TextStyle(fontSize: 14, color: Colors.blue),))),
+                    )
+                  ],
+                ),
           ],
         ),
-      ),
+      )
     );
+  }
+  Future signIn() async{
+    showDialog(context: context,barrierDismissible: false, builder: (context)=>Center(child: CircularProgressIndicator(),));
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+    }
+    on FirebaseAuthException catch(e){
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message ?? 'An error occurred during Login.'),
+        ),
+      );
+    }
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
