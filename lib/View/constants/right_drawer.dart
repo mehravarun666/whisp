@@ -124,7 +124,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
         ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.grey, // Change button color here
+          backgroundColor:  Colors.grey,
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),

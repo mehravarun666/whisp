@@ -43,6 +43,10 @@ dependencies:
   firebase_database: ^10.4.5
   firebase_ui_oauth_google: ^1.2.10
   email_validator: ^2.1.17
+  image_picker: ^1.0.7
+  image_cropper: ^4.0.1
+  cloud_firestore: ^4.15.5
+  firebase_storage: ^11.6.6
 
 dev_dependencies:
   flutter_test:
